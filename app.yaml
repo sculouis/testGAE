@@ -1,0 +1,26 @@
+application: your-app-id
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /products/.*
+  script: main.app
+  
+- url: /catalogs/.*
+  script: catalog.app  
+
+- url: (.*)/
+  static_files: app\1/index.html
+  upload: app
+
+- url: (.*)
+  static_files: app\1
+  upload: app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

@@ -1,0 +1,70 @@
+<h2>產品名單</h2>
+<div class="row-fluid">
+    <div class="span4">
+        <a href="" role="button" class="btn" ng-click="invite()">新增</a>
+    </div>
+    <div class="span4 offset3" align="right" ng-init="r1checked=true">
+        <label class="radio inline">
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="5" ng-click="r1checked=true;r2checked=false;setPageRecNo();"  ng-checked="r1checked">5筆
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="10" ng-checked="r2checked" ng-click="r1checked=false;r2checked=true;setPageRecNo();">10筆
+        </label>
+    </div>
+</div>
+<br>
+<table class="table table-hover" ng-init="pageInit()">
+    <tr>
+        <th>產品編號</th>
+        <th>產品名稱</th>
+        <th>產品類別</th>
+        <th>刪除</th>
+        <th>修改</th>
+    </tr>
+    <tr ng-repeat="product in products | orderBy:'Catalog_Id' | orderBy:'Product_Id'">
+        <td>
+            {{ $index + 1 }}
+        </td>
+        <td>
+            {{ product.Product_Id }}
+        </td>
+        <td>
+            {{ product.Product_Name }}
+        </td>
+        <td>
+            <!-- <a href="#myModal" role="button" class="btn" data-toggle="modal">刪除</a> -->
+            <button type="button" data-toggle="modal" data-target="#myModal" ng-click="setGuest(product)">刪除</button>
+        </td>
+        <td>
+            <button type="button" data-toggle="modal" ng-click="update(product)">修改</button>
+        </td>
+    </tr>
+</table>
+<hr>
+<div class="pagination pagination-small">
+    <ul>
+        <li id="Prev"><a href="" ng-click="pageView(1)">Prev</a>
+        </li>
+        <li ng-repeat="page in pagesIter" ng-class="setAct(page)" ><a href="" ng-click="currpage(page)">{{ page }}</a>
+        </li>
+        <li id="Next"><a href="" ng-click="pageView(2)">Next</a>
+        </li>
+        <li>&nbsp&nbsp共:{{pagesIter.length}} 頁</li>
+    </ul>
+</div>
+<!-- Button to trigger modal -->
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">確認視窗</h3>
+    </div>
+    <div class="modal-body">
+        <p>確定刪除-姓名： {{ currentguest.Product_Name }} ？</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <button class="btn btn-primary" ng-click="delete(guest)">確定</button>
+    </div>
+</div>
